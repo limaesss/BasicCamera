@@ -17,6 +17,11 @@ class Camera:
         self.accel = 0.5
         self.decell = 0.4
 
+        self.targetOffsetX = 0
+        self.targetOffsetY = 0
+        self.offsetX = self.targetOffsetX
+        self.offsetY = self.targetOffsetY
+
     def update(self):
         holdKeys = self.holdKeys
         if holdKeys[pg.K_LEFT]:
@@ -52,3 +57,13 @@ class Camera:
             instance.y -= round(self.downVel)
 
             self.applyOffset(instance.x,instance.y)
+
+    def updateOffset(self, customMax, customMultiplier, customOffsetReducer):
+        xVel = round(self.rightVel, customMax) - round(self.leftVel, customMax)
+        yVel = round(self.downVel, customMax) - round(self.upVel, customMax)
+
+        self.target_offset_x = -xVel * customMultiplier
+        self.target_offset_y = -yVel * customMultiplier
+
+        self.offset_x += (self.targetOffsetX - self.offsetX) * customOffsetReducer
+        self.offset_y += (self.targetOffsetY - self.offsetY) * customOffsetReducer
