@@ -9,3 +9,8 @@ class Camera:
         self.rightVel = 0
         self.upVel = 0
         self.downVel = 0
+
+        self.maxVel = 4
+
+        self.accel = 0.5
+        self.decell = 0.4
