@@ -67,3 +67,14 @@ class Camera:
 
         self.offset_x += (self.targetOffsetX - self.offsetX) * customOffsetReducer
         self.offset_y += (self.targetOffsetY - self.offsetY) * customOffsetReducer
+
+    def applyOffset(self, x, y):
+        return x + self.offset_x, y + self.offset_y
+
+    def getPlayerPosition(self, screenHeight):
+        screenCenterX = 935
+
+        playerX = screenHeight + self.offsetX 
+        playerY = screenHeight / 2 + self.offsetY
+        
+        return playerX, playerY
