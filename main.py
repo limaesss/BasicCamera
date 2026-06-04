@@ -22,12 +22,14 @@ class Camera:
         self.offsetX = self.targetOffsetX
         self.offsetY = self.targetOffsetY
 
-    def update(self):
-        holdKeys = self.holdKeys
+    def update(self): # it updates the velocities then moves everything
+        holdKeys = self.holdKeys # for less self.'s i hate them
         if holdKeys[pg.K_LEFT]:
-            self.leftVel = min(self.leftVel + self.accel, self.maxVel)
+            self.leftVel = min(self.leftVel + self.accel, self.maxVel) # increments leftVel until it hits maxVel
         else:
-            self.leftVel = max(self.leftVel - self.decell, 0)
+            self.leftVel = max(self.leftVel - self.decell, 0) # decrements leftVel until it hits 0
+
+        # same for all the 'if' statements below
 
         if holdKeys[pg.K_RIGHT]:
             self.rightVel = min(self.rightVel + self.accel, self.maxVel)
@@ -40,41 +42,41 @@ class Camera:
             self.upVel = max(self.upVel - self.decell, 0)
 
         if holdKeys[pg.K_DOWN]:
-            # Notice I changed downVel to downVel consistently
             self.downVel = min(self.downVel + self.accel, self.maxVel)
         else:
             self.downVel = max(self.downVel - self.decell, 0)
-
+        
         self.moveEverything()
 
     def moveEverything(self):
         for instance in self.instances:
 
-            instance.x -= round(self.rightVel)
-            instance.x += round(self.leftVel)
+            instance.x -= round(self.rightVel) # rounded because 
+            instance.x += round(self.leftVel) # it was buggy without it
 
             instance.y += round(self.upVel)
             instance.y -= round(self.downVel)
 
-            self.applyOffset(instance.x,instance.y)
+            self.applyOffset(instance.x,instance.y) # apply offset to all the instances
 
     def updateOffset(self, customMax, customMultiplier, customOffsetReducer):
-        xVel = round(self.rightVel, customMax) - round(self.leftVel, customMax)
-        yVel = round(self.downVel, customMax) - round(self.upVel, customMax)
+        xVel = round(self.rightVel, customMax) - round(self.leftVel, customMax) # xVel,yVel made  
+        yVel = round(self.downVel, customMax) - round(self.upVel, customMax) # so it takes less lines of code, and looks simpler
 
-        self.target_offset_x = -xVel * customMultiplier
-        self.target_offset_y = -yVel * customMultiplier
+        self.target_offset_x = -xVel * customMultiplier # customizable for the purposes of me
+        self.target_offset_y = -yVel * customMultiplier # being picky asf lol
 
-        self.offset_x += (self.targetOffsetX - self.offsetX) * customOffsetReducer
-        self.offset_y += (self.targetOffsetY - self.offsetY) * customOffsetReducer
+        self.offset_x += (self.targetOffsetX - self.offsetX) * customOffsetReducer # offset reducer so
+        self.offset_y += (self.targetOffsetY - self.offsetY) * customOffsetReducer # it doesnt fly away
 
     def applyOffset(self, x, y):
-        return x + self.offset_x, y + self.offset_y
+        return x + self.offset_x, y + self.offset_y 
 
     def getPlayerPosition(self, screenHeight):
         screenCenterX = 935
+        screenCenterY = screenHeight / 2
 
-        playerX = screenHeight + self.offsetX 
-        playerY = screenHeight / 2 + self.offsetY
+        playerX = screenCenterX + self.offsetX
+        playerY = screenCenterY + self.offsetY 
         
         return playerX, playerY
