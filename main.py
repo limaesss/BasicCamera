@@ -41,3 +41,14 @@ class Camera:
             self.downVel = max(self.downVel - self.decell, 0)
 
         self.moveEverything()
+
+    def moveEverything(self):
+        for instance in self.instances:
+
+            instance.x -= round(self.rightVel)
+            instance.x += round(self.leftVel)
+
+            instance.y += round(self.upVel)
+            instance.y -= round(self.downVel)
+
+            self.applyOffset(instance.x,instance.y)
