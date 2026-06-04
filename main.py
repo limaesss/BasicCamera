@@ -63,14 +63,14 @@ class Camera:
         xVel = round(self.rightVel, customMax) - round(self.leftVel, customMax) # xVel,yVel made  
         yVel = round(self.downVel, customMax) - round(self.upVel, customMax) # so it takes less lines of code, and looks simpler
 
-        self.target_offset_x = -xVel * customMultiplier # customizable for the purposes of me
-        self.target_offset_y = -yVel * customMultiplier # being picky asf lol
+        self.targetOffsetX = -xVel * customMultiplier # customizable for the purposes of me
+        self.targetOffsetY = -yVel * customMultiplier # being picky asf lol
 
-        self.offset_x += (self.targetOffsetX - self.offsetX) * customOffsetReducer # offset reducer so
-        self.offset_y += (self.targetOffsetY - self.offsetY) * customOffsetReducer # it doesnt fly away
+        self.offsetX += (self.targetOffsetX - self.offsetX) * customOffsetReducer # offset reducer so
+        self.offsetY += (self.targetOffsetY - self.offsetY) * customOffsetReducer # it doesnt fly away
 
     def applyOffset(self, x, y):
-        return x + self.offset_x, y + self.offset_y 
+        return x + self.offsetX, y + self.offsetY 
 
     def getPlayerPosition(self, screenHeight):
         screenCenterX = 935
